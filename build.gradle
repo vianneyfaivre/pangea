@@ -1,0 +1,49 @@
+buildscript {
+	repositories {
+		jcenter()
+	}
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.1.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'eclipse'
+apply plugin: 'spring-boot'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+	/* BASE */
+	compile("org.springframework.boot:spring-boot-starter-parent:1.4.1.RELEASE")
+	compile("org.apache.commons:commons-lang3:3.4");
+	compile("commons-io:commons-io:2.5");
+	
+	/* WEB */
+	compile("org.springframework.boot:spring-boot-starter-web")
+	compile("org.thymeleaf:thymeleaf:3.0.2.RELEASE")
+	compile("org.thymeleaf:thymeleaf-spring4:3.0.2.RELEASE")
+	
+	/* DB */    
+	compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("com.h2database:h2")
+    
+    /* BATCH */
+    compile("org.springframework.boot:spring-boot-starter-batch")
+
+	/* DEV */
+    compile("org.springframework.boot:spring-boot-starter-jetty")
+    compile("org.springframework.boot:spring-boot-devtools")
+}
+
+war {
+    baseName = 'pangea'
+    version =  '0.1.0'
+}
+
+task wrapper(type: Wrapper) {
+   gradleVersion = '2.14.1'
+}

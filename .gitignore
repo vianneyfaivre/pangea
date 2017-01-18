@@ -61,3 +61,10 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+.gradle
+.settings
+.classpath
+.project
+.springBeans
+build
