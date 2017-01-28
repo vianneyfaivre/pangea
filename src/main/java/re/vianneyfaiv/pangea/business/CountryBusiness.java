@@ -1,5 +1,7 @@
 package re.vianneyfaiv.pangea.business;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,5 +22,9 @@ public class CountryBusiness {
 		this.countryRepo.save(country);
 
 		return country;
+	}
+
+	public List<Country> getAllCountries() {
+		return this.countryRepo.findAll();
 	}
 }
