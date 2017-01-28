@@ -26,6 +26,9 @@ public class PangeaBatchStepImportCountriesIso3166 implements PangeaBatchStep<Co
 	public ItemWriter<CountryIso3166BatchBean> writer() {
 		return items -> {
 			for (CountryIso3166BatchBean item : items) {
+				if(item.ignore()) {
+					continue;
+				}
 				this.countryBusiness.create(item);
 			}
 		};
@@ -45,7 +48,7 @@ public class PangeaBatchStepImportCountriesIso3166 implements PangeaBatchStep<Co
 			{
 				this.setLineTokenizer(new DelimitedLineTokenizer() {
 					{
-						this.setNames(new String[] { "Name", "Code" });
+						this.setNames(new String[] { "Name", "Code", "Ignore" });
 					}
 				});
 				this.setFieldSetMapper(new BeanWrapperFieldSetMapper<CountryIso3166BatchBean>() {

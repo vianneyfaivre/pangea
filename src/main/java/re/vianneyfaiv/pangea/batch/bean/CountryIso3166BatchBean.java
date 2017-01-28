@@ -4,13 +4,15 @@ public class CountryIso3166BatchBean {
 
 	private String name;
 	private String code;
+	private boolean ignore;
 
 	public CountryIso3166BatchBean() {
 	}
 
-	public CountryIso3166BatchBean(String name, String code) {
+	public CountryIso3166BatchBean(String name, String code, boolean ignore) {
 		this.name = name;
 		this.code = code;
+		this.ignore = ignore;
 	}
 
 	public String getName() {
@@ -29,9 +31,16 @@ public class CountryIso3166BatchBean {
 		this.code = code;
 	}
 
-	@Override
-	public String toString() {
-		return "CountryIso3166BatchBean [name=" + this.name + ", code=" + this.code + "]";
+	public boolean ignore() {
+		return this.ignore;
 	}
 
+	public void setIgnore(boolean ignore) {
+		this.ignore = ignore;
+	}
+
+	@Override
+	public String toString() {
+		return "CountryIso3166BatchBean [name=" + this.name + ", code=" + this.code + ", ignore=" + this.ignore + "]";
+	}
 }
