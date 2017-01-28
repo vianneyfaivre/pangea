@@ -19,18 +19,12 @@ public class QuizBusiness {
 	@Autowired
 	private CountryRepository countryRepository;
 
-	/**
-	 * TODO : retourner des question provenant du repo, ajouter une couche entre
-	 * le repo et la view
-	 */
 	public QuestionView generateQuestion(int proposalsCount) {
 		Assert.isTrue(proposalsCount > 0);
 
 		// Get min & max IDs
 		int minId = 1;
-		int maxId = (int) this.countryRepository.count(); // TODO : count can
-															// return an int ?
-															// would be better
+		int maxId = (int) this.countryRepository.count();
 
 		Assert.isTrue(proposalsCount <= maxId);
 
