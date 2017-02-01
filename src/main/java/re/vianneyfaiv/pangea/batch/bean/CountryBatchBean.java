@@ -1,5 +1,7 @@
 package re.vianneyfaiv.pangea.batch.bean;
 
+import org.apache.commons.lang3.StringUtils;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -41,6 +43,10 @@ public class CountryBatchBean {
     private String capitalCity;
     private String longitude;
     private String latitude;
+
+    public boolean isCountry() {
+    	return StringUtils.isNotEmpty(this.capitalCity);
+    }
 
 	@Override
 	public String toString() {

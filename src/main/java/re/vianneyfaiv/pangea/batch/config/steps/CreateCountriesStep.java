@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemStreamException;
 import org.springframework.batch.item.ItemWriter;
@@ -22,9 +24,12 @@ import com.fasterxml.jackson.databind.type.CollectionLikeType;
 import lombok.Getter;
 import re.vianneyfaiv.pangea.batch.bean.CountryBatchBean;
 import re.vianneyfaiv.pangea.business.CountryBusiness;
+import re.vianneyfaiv.pangea.business.PangeaBusinessException;
 
 @Configuration
 public class CreateCountriesStep {
+
+	private static final Logger log = LoggerFactory.getLogger(CreateCountriesStep.class);
 
 	@Autowired @Getter private CountriesItemReader reader;
 	@Autowired @Getter private CountriesItemWriter writer;
@@ -75,7 +80,15 @@ public class CreateCountriesStep {
 		public void write(List<? extends CountryBatchBean> countries) throws Exception {
 			countries
 				.stream()
-				.forEach(country -> this.countryBusiness.create(country));
+				.forEach(country -> this.processItem(country));
+		}
+
+		private void processItem(CountryBatchBean item) {
+			try {
+				this.countryBusiness.create(item);
+			} catch (PangeaBusinessException e) {
+				log.warn(e.getMessage());
+			}
 		}
 	}
 

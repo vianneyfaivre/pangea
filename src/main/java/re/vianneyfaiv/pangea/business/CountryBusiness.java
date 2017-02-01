@@ -15,7 +15,11 @@ public class CountryBusiness {
 	@Autowired
 	private CountryRepository countryRepo;
 
-	public Country create(CountryBatchBean item) {
+	public Country create(CountryBatchBean item) throws PangeaBusinessException {
+
+		if(!item.isCountry()) {
+			throw new PangeaBusinessException("Item with id "+item.getId()+" is not a country");
+		}
 
 		Country country = new Country(item.getName(), item.getIso2Code());
 
