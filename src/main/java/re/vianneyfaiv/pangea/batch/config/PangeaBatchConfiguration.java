@@ -15,12 +15,11 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.listener.JobExecutionListenerSupport;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import re.vianneyfaiv.pangea.batch.bean.CountryIso3166BatchBean;
-import re.vianneyfaiv.pangea.batch.config.steps.PangeaBatchStep;
+import re.vianneyfaiv.pangea.batch.bean.CountryBatchBean;
+import re.vianneyfaiv.pangea.batch.config.steps.CreateCountriesStep;
 
 @Configuration
 @EnableBatchProcessing
@@ -29,15 +28,13 @@ public class PangeaBatchConfiguration {
 	private static final Logger log = LoggerFactory.getLogger(PangeaBatchConfiguration.class);
 
 	@Autowired
-	public JobBuilderFactory jobBuilderFactory;
+	private JobBuilderFactory jobBuilderFactory;
 
 	@Autowired
-	public StepBuilderFactory stepBuilderFactory;
+	private StepBuilderFactory stepBuilderFactory;
 
 	@Autowired
-	@Qualifier(value = "stepCountryIso3166")
-	public PangeaBatchStep<CountryIso3166BatchBean> stepCountryIso3166;
-
+	private CreateCountriesStep createCountriesStep;
 
 	@Bean
 	public JobExecutionListenerSupport listener() {
@@ -63,15 +60,15 @@ public class PangeaBatchConfiguration {
 	public Job pangeaInitialBatch() throws IOException {
 		return this.jobBuilderFactory.get("pangeaInitialBatch")
 				.incrementer(new RunIdIncrementer()).listener(this.listener()) //
-				.flow(this.stepCountryIso3166()) //
+				.flow(this.stepCountries())
 				.end().build();
 	}
 
-	public Step stepCountryIso3166() {
-		return this.stepBuilderFactory.get("stepCountryIso3166")
-				.<CountryIso3166BatchBean, CountryIso3166BatchBean>chunk(10).reader(this.stepCountryIso3166.reader()) //
-				.processor(this.stepCountryIso3166.processor()) //
-				.writer(this.stepCountryIso3166.writer()).build();
+	public Step stepCountries() {
+		return this.stepBuilderFactory.get("stepCountries")
+				.<CountryBatchBean, CountryBatchBean>chunk(10)
+				.reader(this.createCountriesStep.getReader())
+				.writer(this.createCountriesStep.getWriter())
+				.build();
 	}
-
 }
