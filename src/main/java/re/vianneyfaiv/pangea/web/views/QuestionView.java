@@ -11,13 +11,8 @@ import re.vianneyfaiv.pangea.domain.Country;
 
 /**
  * A question contains a list of proposals and an answer
- *
- * M : model object
- *
- * V : view object
- *
  */
-public class QuestionView/* <M, V> */ {
+public class QuestionView {
 
 	private Set<SimpleCountryView> proposals;
 	private SimpleCountryView answer;

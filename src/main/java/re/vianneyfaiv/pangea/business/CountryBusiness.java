@@ -21,7 +21,7 @@ public class CountryBusiness {
 			throw new PangeaBusinessException("Item with id "+item.getId()+" is not a country");
 		}
 
-		Country country = new Country(item.getName(), item.getIso2Code());
+		Country country = new Country(item.getName(), item.getIso2Code(), item.getCapitalCity());
 
 		this.countryRepo.save(country);
 

@@ -7,7 +7,10 @@ import javax.persistence.Id;
 
 import org.springframework.core.io.ClassPathResource;
 
-@Entity
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity @Getter @Setter
 public class Country {
 
 	@Id
@@ -16,13 +19,15 @@ public class Country {
 
 	private String name;
 	private String isoName2;
+	private String capitalCity;
 
 	protected Country() {
 	}
 
-	public Country(String name, String isoName2) {
+	public Country(String name, String isoName2, String capitalCity) {
 		this.name = name;
 		this.isoName2 = isoName2;
+		this.capitalCity = capitalCity;
 	}
 
 	public String getFlagPath() {
@@ -39,29 +44,5 @@ public class Country {
 		String countryIso2 = this.isoName2.toLowerCase();
 
 		return new ClassPathResource(String.format(flagsPath, countryIso2)).exists();
-	}
-
-	public Integer getCountryId() {
-		return this.countryId;
-	}
-
-	public void setCountryId(Integer countryId) {
-		this.countryId = countryId;
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getIsoName2() {
-		return this.isoName2;
-	}
-
-	public void setIsoName2(String isoName2) {
-		this.isoName2 = isoName2;
 	}
 }

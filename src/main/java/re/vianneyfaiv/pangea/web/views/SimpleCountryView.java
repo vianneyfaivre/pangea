@@ -2,29 +2,20 @@ package re.vianneyfaiv.pangea.web.views;
 
 import javax.validation.constraints.NotNull;
 
+import lombok.Getter;
 import re.vianneyfaiv.pangea.domain.Country;
 
+@Getter
 public class SimpleCountryView {
 
 	private String name;
 	private String flagPath;
+	private String capitalCity;
 
 	public SimpleCountryView(@NotNull Country country) {
 		this.name = country.getName();
 		this.flagPath = country.getFlagPath();
-	}
-
-	@Override
-	public String toString() {
-		return "SimpleCountryView [name=" + this.name + ", flagPath=" + this.flagPath + "]";
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public String getFlagPath() {
-		return this.flagPath;
+		this.capitalCity = country.getCapitalCity();
 	}
 
 	@Override
@@ -63,5 +54,10 @@ public class SimpleCountryView {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "SimpleCountryView [name=" + this.name + ", flagPath=" + this.flagPath + ", capitalCity=" + this.capitalCity + "]";
 	}
 }
